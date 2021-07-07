@@ -1,11 +1,15 @@
 :root {
+    --black: #171717;
     --red: #A21E24;
+    --white: rgb(240, 241, 241);
     --sblue: rgba(15, 177, 226, 0.747);
     --lblue: #0FBBDC;
     --dblue: rgb(36, 46, 161);
     --ddblue: #272d75;
     --tblue: #0c2d3bb9;
     --yellow: #ffd829;
+    --green: #02ca3e;
+    --dgreen: #2ce764;
 }
 
 * {
@@ -27,6 +31,7 @@ body {
     overflow: hidden;
     color: var(--lblue);
     text-shadow: 0 0 .8vmin var(--sblue);
+    background-color: var(--black);
 }
 
 .background {
@@ -100,15 +105,17 @@ body {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 1.5vmin;
+    gap: 1.3vmin;
     padding: 1vmin;
     height: 7vmin;
     overflow: hidden;
-    transition-duration: 1s;
+    overflow-y: auto;
+    transition-duration: .2s;
+    transition-timing-function: ease-in-out;
 }
 
 .upg:hover {
-    height: fit-content;
+    height: 18vmin;
 }
 
 .upgrade {
@@ -131,22 +138,40 @@ body {
 }
 
 .item {
-    width: 97%;
+    width: 96%;
     height: 7vmin;
-    margin: auto;
+    margin-right: auto;
+    margin-left: auto;
     margin: 2vmin 0 2vmin;
     border: .5vmin solid var(--lblue);
     box-shadow: 0 0 .8vmin var(--sblue);
     border-radius: 1%;
     cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    text-shadow: 0 0 1vmin var(--sblue);
+    padding: .5vmin;
 }
 
 .item:hover {
     background-color: var(--sblue);
     border: unset;
-    width: calc(97% + 1.1vmin);
+    width: calc(96% + 1.1vmin);
     height: 8vmin;
     box-shadow: unset;
+    text-shadow: 0 0 .01vmin var(--white);
+}
+
+
+/* width: calc(96% + 1.1vmin);
+    height: 8vmin; */
+
+.item:hover .iprice {
+    color: var(--yellow);
+}
+
+.item:hover .igain {
+    color: var(--dgreen);
 }
 
 .item:active,
@@ -161,6 +186,69 @@ body {
     border: unset;
 }
 
+.lside {
+    flex: 3;
+}
+
+.rside {
+    flex: 1;
+    text-align: right;
+}
+
+.lside,
+.rside {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: .15vmin;
+}
+
+.iid {
+    flex: 6;
+    display: flex;
+    flex-direction: row;
+    gap: 1vmin;
+}
+
+.iico {
+    flex: 1;
+    background-image: url(gfx/alyx.jpg);
+    background-size: contain;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    border-radius: 5%;
+}
+
+.iname {
+    flex: 4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: var(--white);
+    font-size: 2.4vmin;
+}
+
+.iprice {
+    flex: 1;
+    padding-left: 1vmin;
+    color: var(--lblue);
+}
+
+.icount {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 4vmin;
+    color: var(--white);
+}
+
+.igain {
+    flex: 1;
+    font-size: 2.3vmin;
+    color: var(--green);
+}
+
 .count {
     flex: 1;
     text-align: center;
@@ -168,6 +256,7 @@ body {
     flex-direction: column;
     justify-content: center;
     font-size: 5vmin;
+    padding: 1vmin;
 }
 
 .resin {

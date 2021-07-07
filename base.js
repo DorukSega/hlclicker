@@ -1,6 +1,80 @@
 var resin = 0;
 var respersec = 0; //Resin Per 1/2 Second
 var respcl = 1; //Resin Per Click 
+var items = [
+    [
+        "Crowbar",
+        10, //price
+        2, //amount it gives every tick
+        0 //owned
+    ],
+    [
+        "Hopper Mine",
+        100, //price
+        6, //amount it gives every tick
+        0 //owned
+    ],
+    [
+        "The Alyx",
+        1000, //price
+        20, //amount it gives every tick
+        0 //owned
+    ],
+    [
+        "Health Station",
+        10000, //price
+        50, //amount it gives every tick
+        0 //owned
+    ],
+    [
+        "Ammo Crate",
+        100000, //price
+        160, //amount it gives every tick
+        0 //owned
+    ],
+    [
+        "Mod. Turret",
+        1000000, //price
+        500, //amount it gives every tick
+        0 //owned
+    ],
+    [
+        "Scout Car",
+        10000000, //price
+        1500, //amount it gives every tick
+        0 //owned
+    ],
+    [
+        "Magnusson Device",
+        100000000, //price
+        4300, //amount it gives every tick
+        0 //owned
+    ],
+    [
+        "Gravity Gun",
+        1000000000, //price
+        13100, //amount it gives every tick
+        0 //owned
+    ],
+    [
+        "HEV Suit",
+        10000000000, //price
+        39300, //amount it gives every tick
+        0 //owned
+    ],
+    [
+        "Dog",
+        100000000000, //price
+        118000, //amount it gives every tick
+        0 //owned
+    ],
+    [
+        "Resistance Base",
+        1000000000000, //price
+        354000, //amount it gives every tick
+        0 //owned
+    ]
+];
 let numericallocs = [
     "",
     "thousand",
@@ -37,10 +111,6 @@ let numericallocs = [
     "untrigintillion",
     "duotrigintillion" //10 ** 99 if user reaches here it just continues
 ];
-let resinloc = [
-    "resin",
-    "resins"
-];
 window.addEventListener('load', (event) => {
     const resin = document.querySelector(".resin");
 
@@ -51,6 +121,7 @@ window.addEventListener('load', (event) => {
     setInterval(function() {
         if (respersec > 0) {
             addresin(respersec);
+            //respcl = parseInt((respersec / 100) + 1); //move this when bought item
         }
     }, 500); //not per second bcs it do be long
 });
@@ -58,123 +129,124 @@ window.addEventListener('load', (event) => {
 
 function addresin(amt) {
     resin = resin + amt;
+    document.querySelector(".ttl").textContent = numtostr(resin) + " resin";
+}
+
+function numtostr(number) {
     var nloc = "";
     var resloc = 0;
-    if (resin < 1000) { //before you curse me for writing if else, this was the most optimized method.
-        resloc = resin;
-        nloc = numericallocs[0] + resloccal(resloc);
-    } else if (resin < (10 ** 6)) { //thousand
-        resloc = parseFloat(resin / (10 ** 3)).toFixed(3);
-        nloc = numericallocs[1] + resloccal(resloc);
-    } else if (resin < (10 ** 9)) { //million
-        resloc = parseFloat(resin / (10 ** 6)).toFixed(3);
-        nloc = numericallocs[2] + resloccal(resloc);
-    } else if (resin < (10 ** 12)) { //billion
-        resloc = parseFloat(resin / (10 ** 9)).toFixed(3);
-        nloc = numericallocs[3] + resloccal(resloc);
-    } else if (resin < (10 ** 15)) { //trillion
-        resloc = parseFloat(resin / (10 ** 12)).toFixed(3);
-        nloc = numericallocs[4] + resloccal(resloc);
-    } else if (resin < (10 ** 18)) {
-        resloc = parseFloat(resin / (10 ** 15)).toFixed(3);
-        nloc = numericallocs[5] + resloccal(resloc);
-    } else if (resin < (10 ** 21)) {
-        resloc = parseFloat(resin / (10 ** 18)).toFixed(3);
-        nloc = numericallocs[6] + resloccal(resloc);
-    } else if (resin < (10 ** 24)) {
-        resloc = parseFloat(resin / (10 ** 21)).toFixed(3);
-        nloc = numericallocs[7] + resloccal(resloc);
-    } else if (resin < (10 ** 27)) {
-        resloc = parseFloat(resin / (10 ** 24)).toFixed(3);
-        nloc = numericallocs[8] + resloccal(resloc);
-    } else if (resin < (10 ** 30)) {
-        resloc = parseFloat(resin / (10 ** 27)).toFixed(3);
-        nloc = numericallocs[9] + resloccal(resloc);
-    } else if (resin < (10 ** 33)) {
-        resloc = parseFloat(resin / (10 ** 30)).toFixed(3);
-        nloc = numericallocs[10] + resloccal(resloc);
-    } else if (resin < (10 ** 36)) {
-        resloc = parseFloat(resin / (10 ** 33)).toFixed(3);
-        nloc = numericallocs[11] + resloccal(resloc);
-    } else if (resin < (10 ** 39)) {
-        resloc = parseFloat(resin / (10 ** 36)).toFixed(3);
-        nloc = numericallocs[12] + resloccal(resloc);
-    } else if (resin < (10 ** 42)) {
-        resloc = parseFloat(resin / (10 ** 39)).toFixed(3);
-        nloc = numericallocs[13] + resloccal(resloc);
-    } else if (resin < (10 ** 45)) {
-        resloc = parseFloat(resin / (10 ** 42)).toFixed(3);
-        nloc = numericallocs[14] + resloccal(resloc);
-    } else if (resin < (10 ** 48)) {
-        resloc = parseFloat(resin / (10 ** 45)).toFixed(3);
-        nloc = numericallocs[15] + resloccal(resloc);
-    } else if (resin < (10 ** 51)) {
-        resloc = parseFloat(resin / (10 ** 48)).toFixed(3);
-        nloc = numericallocs[16] + resloccal(resloc);
-    } else if (resin < (10 ** 54)) {
-        resloc = parseFloat(resin / (10 ** 51)).toFixed(3);
-        nloc = numericallocs[17] + resloccal(resloc);
-    } else if (resin < (10 ** 57)) {
-        resloc = parseFloat(resin / (10 ** 54)).toFixed(3);
-        nloc = numericallocs[18] + resloccal(resloc);
-    } else if (resin < (10 ** 60)) {
-        resloc = parseFloat(resin / (10 ** 57)).toFixed(3);
-        nloc = numericallocs[19] + resloccal(resloc);
-    } else if (resin < (10 ** 63)) {
-        resloc = parseFloat(resin / (10 ** 60)).toFixed(3);
-        nloc = numericallocs[20] + resloccal(resloc);
-    } else if (resin < (10 ** 66)) {
-        resloc = parseFloat(resin / (10 ** 63)).toFixed(3);
-        nloc = numericallocs[21] + resloccal(resloc);
-    } else if (resin < (10 ** 69)) {
-        resloc = parseFloat(resin / (10 ** 66)).toFixed(3);
-        nloc = numericallocs[22] + resloccal(resloc);
-    } else if (resin < (10 ** 72)) {
-        resloc = parseFloat(resin / (10 ** 69)).toFixed(3);
-        nloc = numericallocs[23] + resloccal(resloc);
-    } else if (resin < (10 ** 75)) {
-        resloc = parseFloat(resin / (10 ** 72)).toFixed(3);
-        nloc = numericallocs[24] + resloccal(resloc);
-    } else if (resin < (10 ** 78)) {
-        resloc = parseFloat(resin / (10 ** 75)).toFixed(3);
-        nloc = numericallocs[25] + resloccal(resloc);
-    } else if (resin < (10 ** 81)) {
-        resloc = parseFloat(resin / (10 ** 78)).toFixed(3);
-        nloc = numericallocs[26] + resloccal(resloc);
-    } else if (resin < (10 ** 84)) {
-        resloc = parseFloat(resin / (10 ** 81)).toFixed(3);
-        nloc = numericallocs[27] + resloccal(resloc);
-    } else if (resin < (10 ** 87)) {
-        resloc = parseFloat(resin / (10 ** 84)).toFixed(3);
-        nloc = numericallocs[28] + resloccal(resloc);
-    } else if (resin < (10 ** 90)) {
-        resloc = parseFloat(resin / (10 ** 87)).toFixed(3);
-        nloc = numericallocs[29] + resloccal(resloc);
-    } else if (resin < (10 ** 93)) {
-        resloc = parseFloat(resin / (10 ** 90)).toFixed(3);
-        nloc = numericallocs[30] + resloccal(resloc);
-    } else if (resin < (10 ** 96)) {
-        resloc = parseFloat(resin / (10 ** 93)).toFixed(3);
-        nloc = numericallocs[31] + resloccal(resloc);
-    } else if (resin < (10 ** 99)) {
-        resloc = parseFloat(resin / (10 ** 96)).toFixed(3);
-        nloc = numericallocs[32] + resloccal(resloc);
+    if (number < 1000) { //before you curse me for writing if else, this was the most optimized method.
+        resloc = number;
+        nloc = numericallocs[0];
+    } else if (number < (10 ** 6)) { //thousand
+        resloc = parseFloat(number / (10 ** 3)).toFixed(3);
+        nloc = numericallocs[1];
+    } else if (number < (10 ** 9)) { //million
+        resloc = parseFloat(number / (10 ** 6)).toFixed(3);
+        nloc = numericallocs[2];
+    } else if (number < (10 ** 12)) { //billion
+        resloc = parseFloat(number / (10 ** 9)).toFixed(3);
+        nloc = numericallocs[3];
+    } else if (number < (10 ** 15)) { //trillion
+        resloc = parseFloat(number / (10 ** 12)).toFixed(3);
+        nloc = numericallocs[4];
+    } else if (number < (10 ** 18)) {
+        resloc = parseFloat(number / (10 ** 15)).toFixed(3);
+        nloc = numericallocs[5];
+    } else if (number < (10 ** 21)) {
+        resloc = parseFloat(number / (10 ** 18)).toFixed(3);
+        nloc = numericallocs[6];
+    } else if (number < (10 ** 24)) {
+        resloc = parseFloat(number / (10 ** 21)).toFixed(3);
+        nloc = numericallocs[7];
+    } else if (number < (10 ** 27)) {
+        resloc = parseFloat(number / (10 ** 24)).toFixed(3);
+        nloc = numericallocs[8];
+    } else if (number < (10 ** 30)) {
+        resloc = parseFloat(number / (10 ** 27)).toFixed(3);
+        nloc = numericallocs[9];
+    } else if (number < (10 ** 33)) {
+        resloc = parseFloat(number / (10 ** 30)).toFixed(3);
+        nloc = numericallocs[10];
+    } else if (number < (10 ** 36)) {
+        resloc = parseFloat(number / (10 ** 33)).toFixed(3);
+        nloc = numericallocs[11];
+    } else if (number < (10 ** 39)) {
+        resloc = parseFloat(number / (10 ** 36)).toFixed(3);
+        nloc = numericallocs[12];
+    } else if (number < (10 ** 42)) {
+        resloc = parseFloat(number / (10 ** 39)).toFixed(3);
+        nloc = numericallocs[13];
+    } else if (number < (10 ** 45)) {
+        resloc = parseFloat(number / (10 ** 42)).toFixed(3);
+        nloc = numericallocs[14];
+    } else if (number < (10 ** 48)) {
+        resloc = parseFloat(number / (10 ** 45)).toFixed(3);
+        nloc = numericallocs[15];
+    } else if (number < (10 ** 51)) {
+        resloc = parseFloat(number / (10 ** 48)).toFixed(3);
+        nloc = numericallocs[16];
+    } else if (number < (10 ** 54)) {
+        resloc = parseFloat(number / (10 ** 51)).toFixed(3);
+        nloc = numericallocs[17];
+    } else if (number < (10 ** 57)) {
+        resloc = parseFloat(number / (10 ** 54)).toFixed(3);
+        nloc = numericallocs[18];
+    } else if (number < (10 ** 60)) {
+        resloc = parseFloat(number / (10 ** 57)).toFixed(3);
+        nloc = numericallocs[19];
+    } else if (number < (10 ** 63)) {
+        resloc = parseFloat(number / (10 ** 60)).toFixed(3);
+        nloc = numericallocs[20];
+    } else if (number < (10 ** 66)) {
+        resloc = parseFloat(number / (10 ** 63)).toFixed(3);
+        nloc = numericallocs[21];
+    } else if (number < (10 ** 69)) {
+        resloc = parseFloat(number / (10 ** 66)).toFixed(3);
+        nloc = numericallocs[22];
+    } else if (number < (10 ** 72)) {
+        resloc = parseFloat(number / (10 ** 69)).toFixed(3);
+        nloc = numericallocs[23];
+    } else if (number < (10 ** 75)) {
+        resloc = parseFloat(number / (10 ** 72)).toFixed(3);
+        nloc = numericallocs[24];
+    } else if (number < (10 ** 78)) {
+        resloc = parseFloat(number / (10 ** 75)).toFixed(3);
+        nloc = numericallocs[25];
+    } else if (number < (10 ** 81)) {
+        resloc = parseFloat(number / (10 ** 78)).toFixed(3);
+        nloc = numericallocs[26];
+    } else if (number < (10 ** 84)) {
+        resloc = parseFloat(number / (10 ** 81)).toFixed(3);
+        nloc = numericallocs[27];
+    } else if (number < (10 ** 87)) {
+        resloc = parseFloat(number / (10 ** 84)).toFixed(3);
+        nloc = numericallocs[28];
+    } else if (number < (10 ** 90)) {
+        resloc = parseFloat(number / (10 ** 87)).toFixed(3);
+        nloc = numericallocs[29];
+    } else if (number < (10 ** 93)) {
+        resloc = parseFloat(number / (10 ** 90)).toFixed(3);
+        nloc = numericallocs[30];
+    } else if (number < (10 ** 96)) {
+        resloc = parseFloat(number / (10 ** 93)).toFixed(3);
+        nloc = numericallocs[31];
+    } else if (number < (10 ** 99)) {
+        resloc = parseFloat(number / (10 ** 96)).toFixed(3);
+        nloc = numericallocs[32];
     } else {
-        resloc = parseFloat(resin / (10 ** 99)).toFixed(3);
-        nloc = numericallocs[33] + resloccal(resloc);
+        resloc = parseFloat(number / (10 ** 99)).toFixed(3);
+        nloc = numericallocs[33];
     }
-    document.querySelector(".ttl").textContent = `${resloc + " " + nloc}`;
+    return `${parseFloat(resloc) + " " + nloc}`;
 }
 
 function addrps(amt) {
     respersec += amt;
-    document.querySelector(".per").textContent = `${"per interval : " + parseFloat(respersec)}`;
+    document.querySelector(".per").textContent = `${"per interval : " + numtostr(respersec)}`;
 }
 
-function resloccal(amt) {
-    if (amt == 1 || amt == 0) {
-        return " " + resinloc[0];
-    } else {
-        return " " + resinloc[1];
-    }
+function setrps(amt) {
+    respersec = amt;
+    document.querySelector(".per").textContent = `${"per interval : " + numtostr(respersec)}`;
 }
