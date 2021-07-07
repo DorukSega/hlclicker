@@ -1,1 +1,1 @@
-# half-lifeclicker
+# Half-Life Clicker
