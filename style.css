@@ -167,7 +167,7 @@ body {
     height: 8vmin; */
 
 .item:hover .iprice {
-    color: var(--yellow);
+    color: var(--white);
 }
 
 .item:hover .igain {
