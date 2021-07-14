@@ -111,6 +111,7 @@ let numericallocs = [
     "untrigintillion",
     "duotrigintillion" //10 ** 99 if user reaches here it just continues
 ];
+
 window.addEventListener('load', (event) => {
     const resin = document.querySelector(".resin");
 
@@ -118,14 +119,13 @@ window.addEventListener('load', (event) => {
         addresin(respcl)
     });
 
-    setInterval(function() {
+    setInterval(function() { //clock
         if (respersec > 0) {
             addresin(respersec);
             //respcl = parseInt((respersec / 100) + 1); //move this when bought item
         }
     }, 500); //not per second bcs it do be long
 });
-
 
 function addresin(amt) {
     resin = resin + amt;
@@ -135,7 +135,7 @@ function addresin(amt) {
 function numtostr(number) {
     var nloc = "";
     var resloc = 0;
-    if (number < 1000) { //before you curse me for writing if else, this was the most optimized method.
+    if (number < 1000) { //before you curse me for writing if else, this was the most optimised method.
         resloc = number;
         nloc = numericallocs[0];
     } else if (number < (10 ** 6)) { //thousand
@@ -238,15 +238,15 @@ function numtostr(number) {
         resloc = parseFloat(number / (10 ** 99)).toFixed(3);
         nloc = numericallocs[33];
     }
-    return `${parseFloat(resloc) + " " + nloc}`;
+    return `${parseFloat(resloc)} ${nloc}`;
 }
 
 function addrps(amt) {
     respersec += amt;
-    document.querySelector(".per").textContent = `${"per interval : " + numtostr(respersec)}`;
+    document.querySelector(".per").textContent = `per interval : ${numtostr(respersec)}`;
 }
 
 function setrps(amt) {
     respersec = amt;
-    document.querySelector(".per").textContent = `${"per interval : " + numtostr(respersec)}`;
+    document.querySelector(".per").textContent = `per interval : ${numtostr(respersec)}`;
 }

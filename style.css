@@ -4,6 +4,7 @@
     --white: rgb(240, 241, 241);
     --sblue: rgba(15, 177, 226, 0.747);
     --lblue: #0FBBDC;
+    --mblue: #0E8FB6;
     --dblue: rgb(36, 46, 161);
     --ddblue: #272d75;
     --tblue: #0c2d3bb9;
@@ -153,11 +154,10 @@ body {
     padding: .5vmin;
 }
 
-.item:hover {
-    background-color: var(--sblue);
-    border: unset;
-    width: calc(96% + 1.1vmin);
-    height: 8vmin;
+.item:hover,
+.item:active {
+    background-color: var(--mblue);
+    border: .5vmin solid var(--mblue);
     box-shadow: unset;
     text-shadow: 0 0 .01vmin var(--white);
 }
@@ -166,11 +166,13 @@ body {
 /* width: calc(96% + 1.1vmin);
     height: 8vmin; */
 
-.item:hover .iprice {
+.item:hover .iprice,
+.item:active .iprice {
     color: var(--white);
 }
 
-.item:hover .igain {
+.item:hover .igain,
+.item:active .igain {
     color: var(--dgreen);
 }
 
@@ -193,6 +195,7 @@ body {
 .rside {
     flex: 1;
     text-align: right;
+    padding-right: 1vmin;
 }
 
 .lside,
