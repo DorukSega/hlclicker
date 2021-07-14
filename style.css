@@ -9,6 +9,7 @@
     --ddblue: #272d75;
     --tblue: #0c2d3bb9;
     --yellow: #ffd829;
+    --dyellow: #F0C656;
     --green: #02ca3e;
     --dgreen: #2ce764;
 }
@@ -33,13 +34,6 @@ body {
     color: var(--lblue);
     text-shadow: 0 0 .8vmin var(--sblue);
     background-color: var(--black);
-}
-
-.background {
-    position: fixed;
-    min-width: 100%;
-    min-height: 100%;
-    z-index: -99;
 }
 
 ::-webkit-scrollbar {
@@ -84,6 +78,13 @@ body {
     flex-direction: column;
     border-left: 1vmin solid var(--sblue);
     box-shadow: 0 0 .8vmin var(--sblue);
+}
+
+.background {
+    position: fixed;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -99;
 }
 
 .resp {
@@ -161,10 +162,6 @@ body {
     box-shadow: unset;
     text-shadow: 0 0 .01vmin var(--white);
 }
-
-
-/* width: calc(96% + 1.1vmin);
-    height: 8vmin; */
 
 .item:hover .iprice,
 .item:active .iprice {
@@ -284,4 +281,41 @@ body {
     transform: scale(.95);
     transition-timing-function: ease-in-out;
     transition-duration: .05s;
+}
+
+.cleffect {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    height: fit-content;
+    gap: 1vmin;
+    z-index: 99;
+}
+
+.cnumber {
+    font-size: 3vmin;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: flex-end;
+    overflow: visible;
+    background-color: var(--tblue);
+    box-shadow: 0 0 1vmin var(--sblue);
+}
+
+.ceffect {
+    margin: auto;
+    width: 2.5vw;
+    height: 2.5vw;
+    background-color: var(--dyellow);
+}
+
+.hidden {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-5vmin);
+    transition-timing-function: ease-out;
+    transition-duration: 1s;
+    transition: visibility 0s 1s, opacity 1s ease-in;
 }

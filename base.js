@@ -1,7 +1,10 @@
 var resin = 0;
 var respersec = 0; //Resin Per 1/2 Second
 var respcl = 1; //Resin Per Click 
-var items = [
+var mouseX = 0;
+var mouseY = 0
+
+var items = [ //this can be splitted into const and var
     [
         "Crowbar",
         10, //price
@@ -112,11 +115,30 @@ let numericallocs = [
     "duotrigintillion" //10 ** 99 if user reaches here it just continues
 ];
 
+/////// Click Effect ///////
+const cleffect = document.createElement("div");
+const cnumber = document.createElement("div");
+const ceffect = document.createElement("div");
+cleffect.className = "cleffect";
+cnumber.className = "cnumber";
+ceffect.className = "ceffect";
+cleffect.append(cnumber);
+cleffect.append(ceffect);
+////////////////////////////
+
 window.addEventListener('load', (event) => {
     const resin = document.querySelector(".resin");
 
     resin.addEventListener('click', event => {
-        addresin(respcl)
+        addresin(respcl);
+        document.getElementById("clickaudio").play();
+        mouseX = event.clientX;
+        mouseY = event.clientY;
+        const clef = cleffect.cloneNode(true);
+        clef.firstChild.textContent = `+ ${numtostr(respcl)}`
+        document.querySelector(".cleffect").firstElementChild.textContent = `+ ${numtostr(respcl)}`
+        spawn_effect((mouseX - parseInt(getComputedStyle(document.querySelector(".cleffect")).width.replace("px")) / 2) + "px",
+            (mouseY - parseInt(getComputedStyle(document.querySelector(".cleffect")).height.replace("px")) * 1.15) + "px", clef, 100, 1000);
     });
 
     setInterval(function() { //clock
@@ -249,4 +271,18 @@ function addrps(amt) {
 function setrps(amt) {
     respersec = amt;
     document.querySelector(".per").textContent = `per interval : ${numtostr(respersec)}`;
+}
+
+function spawn_effect(x, y, effect, time, eod) {
+    //spawns said effect on given (x,y) in given time interval
+    //effect is the element
+    effect.style.left = x;
+    effect.style.top = y;
+    document.body.prepend(effect);
+    if (time != undefined) {
+        setTimeout(() => {
+            effect.classList.add("hidden");
+            setTimeout(() => { effect.remove() }, eod);
+        }, time);
+    }
 }
