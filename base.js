@@ -173,6 +173,7 @@ window.addEventListener('load', (event) => {
                 if (items[index][2] == 1) {
                     bitems[index + 1].classList.remove("disabled");
                 }
+                respcl = parseInt((respersec / 50) + 1);
             }
         });
     });
@@ -180,9 +181,7 @@ window.addEventListener('load', (event) => {
     setInterval(function() { //clock
         if (respersec > 0) {
             addresin(respersec / 2);
-            //respcl = parseInt((respersec / 100) + 1); //move this when bought item
         }
-
         document.cookie = `save =[${resin},${respersec},${respcl},${JSON.stringify(items)}]; max-age=31536000; SameSite=None; Secure`;
     }, 500); //not per second bcs it do be long
 });
