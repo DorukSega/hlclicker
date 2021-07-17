@@ -1,10 +1,10 @@
 :root {
     --black: #171717;
-    --red: #A21E24;
+    --red: #ee4266;
     --white: rgb(240, 241, 241);
     --sblue: rgba(15, 177, 226, 0.747);
     --lblue: #0FBBDC;
-    --mblue: #0E8FB6;
+    --mblue: #159cc5b7;
     --dblue: rgb(36, 46, 161);
     --ddblue: #272d75;
     --tblue: #0c2d3bcc;
@@ -145,9 +145,7 @@ body {
 .item {
     width: 96%;
     height: 7vmin;
-    margin-right: auto;
-    margin-left: auto;
-    margin: 2vmin 0 2vmin;
+    margin: 2vmin auto 2vmin;
     border: .5vmin solid var(--lblue);
     box-shadow: 0 0 .8vmin var(--sblue);
     border-radius: 1%;
@@ -168,31 +166,31 @@ body {
 
 .item:hover:not(.disabled) .iprice,
 .item:active:not(.disabled) .iprice {
-    color: var(--white);
+    text-shadow: none;
+    color: var(--yellow);
 }
 
-.item:hover:not(.disabled) .igain,
-.item:active:not(.disabled) .igain {
-    color: var(--dgreen);
-}
-
-.item:active:not(.disabled),
-.upgrade:active:not(.disabled) {
+.item:active:not(.disabled, .cantbuy),
+.upgrade:active:not(.disabled, .cantbuy) {
     transform: scale(.96);
     transition-timing-function: ease-in-out;
     transition-duration: .05s;
 }
 
-.item.disabled {
+.item.disabled,
+.item.cantbuy {
     background-color: var(--tblue);
     border: .5vmin solid var(--mblue);
     box-shadow: unset;
+}
+
+.item.disabled {
     cursor: not-allowed;
     text-shadow: none !important;
 }
 
 .lside {
-    flex: 3;
+    flex: 2;
 }
 
 .rside {
@@ -236,16 +234,22 @@ body {
 
 .item.disabled .iname {
     color: var(--gray);
+    text-shadow: none;
 }
 
 .iprice {
     flex: 1;
     padding-left: 1vmin;
-    color: var(--lblue);
+    color: var(--dgreen);
 }
 
 .item.disabled .iprice {
     visibility: hidden;
+}
+
+.item.cantbuy .iprice {
+    color: var(--red);
+    text-shadow: 0 0 1vmin var(--red);
 }
 
 .icount {
@@ -265,7 +269,7 @@ body {
 .igain {
     flex: 1;
     font-size: 2.3vmin;
-    color: var(--green);
+    color: var(--lblue);
 }
 
 .item.disabled .igain {

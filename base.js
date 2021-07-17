@@ -163,18 +163,7 @@ window.addEventListener('load', (event) => {
 
     bitems.forEach(function(item, index) {
         item.addEventListener('click', event => {
-            if (item.classList.contains("disabled") != true && resin >= items[index][0]) {
-                addresin(-items[index][0]);
-                addrps(items[index][1]);
-                items[index][0] = parseInt(items[index][0] * 1.2);
-                items[index][2]++;
-                item.querySelector(".iprice").textContent = `Price: ${numtostr(items[index][0])}`;
-                item.querySelector(".icount").textContent = numtostr(items[index][2]);
-                if (items[index][2] == 1) {
-                    bitems[index + 1].classList.remove("disabled");
-                }
-                respcl = parseInt((respersec / 50) + 1);
-            }
+            buyitem(bitems, item, index, 1);
         });
     });
 
@@ -182,6 +171,11 @@ window.addEventListener('load', (event) => {
         if (respersec > 0) {
             addresin(respersec / 2);
         }
+        bitems.forEach(function(item, index) {
+            if (resin < items[index][0]) {
+                item.classList.add("cantbuy");
+            }
+        });
         document.cookie = `save =[${resin},${respersec},${respcl},${JSON.stringify(items)}]; max-age=31536000; SameSite=None; Secure`;
     }, 500); //not per second bcs it do be long
 });
@@ -195,6 +189,30 @@ function readCookie(name) {
         if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
     }
     return null;
+}
+const times = x => f => {
+    if (x > 0) {
+        f()
+        times(x - 1)(f)
+    }
+}
+
+function buyitem(bitems, item, index, amount) {
+    function buyaction() {
+        if (item.classList.contains("disabled") != true && resin >= items[index][0]) {
+            addresin(-items[index][0]);
+            addrps(items[index][1]);
+            items[index][0] = parseInt(items[index][0] * 1.2);
+            items[index][2]++;
+            item.querySelector(".iprice").textContent = `Price: ${numtostr(items[index][0])}`;
+            item.querySelector(".icount").textContent = numtostr(items[index][2]);
+            if (items[index][2] == 1 && bitems[index + 1] != undefined) {
+                bitems[index + 1].classList.remove("disabled");
+            }
+            respcl = parseInt((respersec / 50) + 1);
+        }
+    }
+    times(amount)(() => buyaction())
 }
 
 function addresin(amt) {
