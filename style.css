@@ -35,7 +35,7 @@ body {
     overflow: hidden;
     color: var(--lblue);
     text-shadow: 0 0 .8vmin var(--sblue);
-    background-color: #2b2b2b;
+    background-color: var(--black);
 }
 
 ::-webkit-scrollbar {

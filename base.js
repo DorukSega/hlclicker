@@ -128,6 +128,19 @@ cleffect.append(ceffect);
 
 window.addEventListener('load', (event) => {
     const bitems = document.querySelectorAll(".item");
+    const cresin = document.querySelector(".resin");
+
+    function canyoubuy() {
+        bitems.forEach(function(item, index) { //adds cantbuy to items
+            if (resin < items[index][0]) {
+                item.classList.add("cantbuy");
+            } else if (item.classList.contains("cantbuy")) {
+                item.classList.remove("cantbuy");
+            }
+        });
+    }
+
+    //loads save
     if (readCookie("save") != `[${resin},${respersec},${respcl},${JSON.stringify(items)}]` && readCookie("save") != null) {
         const save = JSON.parse(readCookie("save"));
         setresin(save[0]);
@@ -147,8 +160,7 @@ window.addEventListener('load', (event) => {
             }
         });
     }
-    const cresin = document.querySelector(".resin");
-
+    canyoubuy();
     cresin.addEventListener('click', event => {
         addresin(respcl);
         document.getElementById("clickaudio").play();
@@ -159,6 +171,7 @@ window.addEventListener('load', (event) => {
         document.querySelector(".cleffect").firstElementChild.textContent = `+ ${numtostr(respcl)}`
         spawn_effect((mouseX - parseInt(getComputedStyle(document.querySelector(".cleffect")).width.replace("px")) / 2) + "px",
             (mouseY - parseInt(getComputedStyle(document.querySelector(".cleffect")).height.replace("px")) * 1.15) + "px", clef, 100, 1000);
+        canyoubuy();
     });
 
     bitems.forEach(function(item, index) {
@@ -171,11 +184,7 @@ window.addEventListener('load', (event) => {
         if (respersec > 0) {
             addresin(respersec / 2);
         }
-        bitems.forEach(function(item, index) {
-            if (resin < items[index][0]) {
-                item.classList.add("cantbuy");
-            }
-        });
+        canyoubuy();
         document.cookie = `save =[${resin},${respersec},${respcl},${JSON.stringify(items)}]; max-age=31536000; SameSite=None; Secure`;
     }, 500); //not per second bcs it do be long
 });
@@ -190,7 +199,8 @@ function readCookie(name) {
     }
     return null;
 }
-const times = x => f => {
+
+const times = x => f => { //does something x times
     if (x > 0) {
         f()
         times(x - 1)(f)
@@ -212,7 +222,7 @@ function buyitem(bitems, item, index, amount) {
             respcl = parseInt((respersec / 50) + 1);
         }
     }
-    times(amount)(() => buyaction())
+    times(amount)(() => buyaction()) //this is reserved for ctrl click if added
 }
 
 function addresin(amt) {
