@@ -6,73 +6,73 @@ var mouseY = 0
 
 var items = [ //this can be splitted into const and var
     [
-        "Crowbar",
+        //Crowbar
         10, //price
         2, //amount it gives every tick
         0 //owned
     ],
     [
-        "Hopper Mine",
+        //Hopper Mine
         100, //price
         6, //amount it gives every tick
         0 //owned
     ],
     [
-        "The Alyx",
+        //The Alyx
         1000, //price
         20, //amount it gives every tick
         0 //owned
     ],
     [
-        "Health Station",
+        //Health Station
         10000, //price
         50, //amount it gives every tick
         0 //owned
     ],
     [
-        "Ammo Crate",
+        //Ammo Crate
         100000, //price
         160, //amount it gives every tick
         0 //owned
     ],
     [
-        "Mod. Turret",
+        //Mod. Turret
         1000000, //price
         500, //amount it gives every tick
         0 //owned
     ],
     [
-        "Scout Car",
+        //Scout Car
         10000000, //price
         1500, //amount it gives every tick
         0 //owned
     ],
     [
-        "Magnusson Device",
+        //Magnusson Device
         100000000, //price
         4300, //amount it gives every tick
         0 //owned
     ],
     [
-        "Gravity Gun",
+        //Gravity Gun
         1000000000, //price
         13100, //amount it gives every tick
         0 //owned
     ],
     [
-        "HEV Suit",
+        //HEV Suit
         10000000000, //price
         39300, //amount it gives every tick
         0 //owned
     ],
     [
-        "Dog",
+        //Dog
         100000000000, //price
         118000, //amount it gives every tick
         0 //owned
     ],
     [
-        "Resistance Base",
+        //Resistance Base
         1000000000000, //price
         354000, //amount it gives every tick
         0 //owned
@@ -127,8 +127,28 @@ cleffect.append(ceffect);
 ////////////////////////////
 
 window.addEventListener('load', (event) => {
-    const cresin = document.querySelector(".resin");
     const bitems = document.querySelectorAll(".item");
+    if (readCookie("save") != `[${resin},${respersec},${respcl},${JSON.stringify(items)}]` && readCookie("save") != null) {
+        const save = JSON.parse(readCookie("save"));
+        setresin(save[0]);
+        setrps(save[1]);
+        respcl = save[2];
+        items = save[3];
+        bitems.forEach(function(item, index) {
+            item.querySelector(".iprice").textContent = `Price: ${numtostr(items[index][0])}`;
+            item.querySelector(".igain").textContent = `+${numtostr(items[index][1])}`;
+            item.querySelector(".icount").textContent = numtostr(items[index][2]);
+            if (index != 0) {
+                if (items[index - 1][2] > 0) {
+                    item.classList.remove("disabled");
+                } else {
+                    item.classList.add("disabled");
+                }
+            }
+        });
+    }
+    const cresin = document.querySelector(".resin");
+
     cresin.addEventListener('click', event => {
         addresin(respcl);
         document.getElementById("clickaudio").play();
@@ -143,17 +163,15 @@ window.addEventListener('load', (event) => {
 
     bitems.forEach(function(item, index) {
         item.addEventListener('click', event => {
-            if (item.classList.contains("disabled") != true) {
-                if (resin >= items[index][1]) {
-                    addresin(-items[index][1]);
-                    addrps(items[index][2]);
-                    items[index][1] = parseInt(items[index][1] * 1.2);
-                    items[index][3]++;
-                    item.querySelector(".iprice").textContent = `Price: ${numtostr(items[index][1])}`;
-                    item.querySelector(".icount").textContent = numtostr(items[index][3]);
-                    if (items[index][3] == 1) {
-                        bitems[index + 1].classList.remove("disabled");
-                    }
+            if (item.classList.contains("disabled") != true && resin >= items[index][0]) {
+                addresin(-items[index][0]);
+                addrps(items[index][1]);
+                items[index][0] = parseInt(items[index][0] * 1.2);
+                items[index][2]++;
+                item.querySelector(".iprice").textContent = `Price: ${numtostr(items[index][0])}`;
+                item.querySelector(".icount").textContent = numtostr(items[index][2]);
+                if (items[index][2] == 1) {
+                    bitems[index + 1].classList.remove("disabled");
                 }
             }
         });
@@ -161,14 +179,32 @@ window.addEventListener('load', (event) => {
 
     setInterval(function() { //clock
         if (respersec > 0) {
-            addresin(respersec);
+            addresin(respersec / 2);
             //respcl = parseInt((respersec / 100) + 1); //move this when bought item
         }
+
+        document.cookie = `save =[${resin},${respersec},${respcl},${JSON.stringify(items)}]; max-age=31536000; SameSite=None; Secure`;
     }, 500); //not per second bcs it do be long
 });
 
+function readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+
 function addresin(amt) {
     resin = resin + amt;
+    document.querySelector(".ttl").textContent = numtostr(resin) + " resin";
+}
+
+function setresin(amt) {
+    resin = amt;
     document.querySelector(".ttl").textContent = numtostr(resin) + " resin";
 }
 
