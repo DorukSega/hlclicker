@@ -7,11 +7,13 @@
     --mblue: #0E8FB6;
     --dblue: rgb(36, 46, 161);
     --ddblue: #272d75;
-    --tblue: #0c2d3bb9;
+    --tblue: #0c2d3bcc;
+    --eblue: #0b2f3fee;
     --yellow: #ffd829;
     --dyellow: #F0C656;
     --green: #02ca3e;
     --dgreen: #2ce764;
+    --gray: rgba(102, 102, 102, 0.938);
 }
 
 * {
@@ -33,7 +35,7 @@ body {
     overflow: hidden;
     color: var(--lblue);
     text-shadow: 0 0 .8vmin var(--sblue);
-    background-color: var(--black);
+    background-color: #2b2b2b;
 }
 
 ::-webkit-scrollbar {
@@ -93,6 +95,7 @@ body {
     flex-direction: column;
     justify-content: center;
     gap: 4%;
+    transition-timing-function: .3s;
 }
 
 .cons {
@@ -155,26 +158,26 @@ body {
     padding: .5vmin;
 }
 
-.item:hover,
-.item:active {
+.item:hover:not(.disabled),
+.item:active:not(.disabled) {
     background-color: var(--mblue);
     border: .5vmin solid var(--mblue);
     box-shadow: unset;
     text-shadow: 0 0 .01vmin var(--white);
 }
 
-.item:hover .iprice,
-.item:active .iprice {
+.item:hover:not(.disabled) .iprice,
+.item:active:not(.disabled) .iprice {
     color: var(--white);
 }
 
-.item:hover .igain,
-.item:active .igain {
+.item:hover:not(.disabled) .igain,
+.item:active:not(.disabled) .igain {
     color: var(--dgreen);
 }
 
-.item:active,
-.upgrade:active {
+.item:active:not(.disabled),
+.upgrade:active:not(.disabled) {
     transform: scale(.96);
     transition-timing-function: ease-in-out;
     transition-duration: .05s;
@@ -182,7 +185,10 @@ body {
 
 .item.disabled {
     background-color: var(--tblue);
-    border: unset;
+    border: .5vmin solid var(--mblue);
+    box-shadow: unset;
+    cursor: not-allowed;
+    text-shadow: none !important;
 }
 
 .lside {
@@ -228,10 +234,18 @@ body {
     font-size: 2.4vmin;
 }
 
+.item.disabled .iname {
+    color: var(--gray);
+}
+
 .iprice {
     flex: 1;
     padding-left: 1vmin;
     color: var(--lblue);
+}
+
+.item.disabled .iprice {
+    visibility: hidden;
 }
 
 .icount {
@@ -243,10 +257,19 @@ body {
     color: var(--white);
 }
 
+.item.disabled .icount {
+    color: var(--gray);
+    visibility: hidden;
+}
+
 .igain {
     flex: 1;
     font-size: 2.3vmin;
     color: var(--green);
+}
+
+.item.disabled .igain {
+    visibility: hidden;
 }
 
 .count {
@@ -306,8 +329,8 @@ body {
 
 .ceffect {
     margin: auto;
-    width: 2.5vw;
-    height: 2.5vw;
+    width: 2.5vmin;
+    height: 2.5vmin;
     background-color: var(--dyellow);
 }
 

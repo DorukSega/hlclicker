@@ -127,9 +127,9 @@ cleffect.append(ceffect);
 ////////////////////////////
 
 window.addEventListener('load', (event) => {
-    const resin = document.querySelector(".resin");
-
-    resin.addEventListener('click', event => {
+    const cresin = document.querySelector(".resin");
+    const bitems = document.querySelectorAll(".item");
+    cresin.addEventListener('click', event => {
         addresin(respcl);
         document.getElementById("clickaudio").play();
         mouseX = event.clientX;
@@ -139,6 +139,24 @@ window.addEventListener('load', (event) => {
         document.querySelector(".cleffect").firstElementChild.textContent = `+ ${numtostr(respcl)}`
         spawn_effect((mouseX - parseInt(getComputedStyle(document.querySelector(".cleffect")).width.replace("px")) / 2) + "px",
             (mouseY - parseInt(getComputedStyle(document.querySelector(".cleffect")).height.replace("px")) * 1.15) + "px", clef, 100, 1000);
+    });
+
+    bitems.forEach(function(item, index) {
+        item.addEventListener('click', event => {
+            if (item.classList.contains("disabled") != true) {
+                if (resin >= items[index][1]) {
+                    addresin(-items[index][1]);
+                    addrps(items[index][2]);
+                    items[index][1] = parseInt(items[index][1] * 1.2);
+                    items[index][3]++;
+                    item.querySelector(".iprice").textContent = `Price: ${numtostr(items[index][1])}`;
+                    item.querySelector(".icount").textContent = numtostr(items[index][3]);
+                    if (items[index][3] == 1) {
+                        bitems[index + 1].classList.remove("disabled");
+                    }
+                }
+            }
+        });
     });
 
     setInterval(function() { //clock
